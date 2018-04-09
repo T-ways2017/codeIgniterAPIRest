@@ -18,7 +18,7 @@ class Author extends CI_Model {
 			$query = $this->db->get_where('authors', array('id_authors' => $id));
 			return $query->row_array();
 		}else{
-			$query = $this->db->get('users');
+			$query = $this->db->get('authors');
 			return $query->result_array();
 		}
 	}
@@ -33,7 +33,7 @@ class Author extends CI_Model {
 		if(!array_key_exists('modified', $data)){
 			$data['modified'] = date("Y-m-d H:i:s");
 		}
-		$insert = $this->db->insert('users', $data);
+		$insert = $this->db->insert('authors', $data);
 		if($insert){
 			return $this->db->insert_id();
 		}else{
@@ -49,7 +49,7 @@ class Author extends CI_Model {
 			if(!array_key_exists('modified', $data)){
 				$data['modified'] = date("Y-m-d H:i:s");
 			}
-			$update = $this->db->update('users', $data, array('id_authors'=>$id));
+			$update = $this->db->update('authors', $data, array('id_authors'=>$id));
 			return $update?true:false;
 		}else{
 			return false;

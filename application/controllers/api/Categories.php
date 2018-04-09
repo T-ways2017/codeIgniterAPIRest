@@ -4,51 +4,50 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 //include Rest Controller library
 require APPPATH . '/libraries/REST_Controller.php';
 
-class Authors extends REST_Controller {
+class Categories extends REST_Controller {
 
 	public function __construct() {
 		parent::__construct();
 
-		//load user model
-		$this->load->model('author');
+		//load categorie model
+		$this->load->model('categorie');
 	}
 
-	public function author_get($id = 0) {
+	public function categorie_get($id = 0) {
 		//returns all rows if the id parameter doesn't exist,
 		//otherwise single row will be returned
-		$authors = $this->author->getRows($id);
+		$categories = $this->categorie->getRows($id);
 
-		//check if the authors data exists
-		if(!empty($authors)){
+		//check if the categorie data exists
+		if(!empty($categories)){
 			//set the response and exit
 			//OK (200) being the HTTP response code
-			$this->response($authors, REST_Controller::HTTP_OK);
+			$this->response($categories, REST_Controller::HTTP_OK);
 		}else{
 			//set the response and exit
 			//NOT_FOUND (404) being the HTTP response code
 			$this->response([
 				'status' => FALSE,
-				'message' => 'No author were found.'
+				'message' => 'No categorie were found.'
 			], REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
 
-	public function author_post() {
-		$authorData = array();
-		$authorData['name'] = $this->post('name');
-		$authorData['login'] = $this->post('login');
-		$authorData['pass_word'] = $this->post('pass_word');
+	public function categorie_post() {
+		$categorieData = array();
+		$categorieData['libelle'] = $this->post('libelle');
+		$categorieData['slug'] = $this->post('slug');
 
-		if(!empty($authorData['name']) && !empty($authorData['login']) && !empty($authorData['pass_word']) ){
+		if(!empty($categorieData['libelle']) && !empty($categorieData['slug'])){
 			//insert user data
-			$insert = $this->author->insert($authorData);
+			$insert = $this->categorie->insert($categorieData);
 
-			//check if the authors data inserted
+			//check if the categorie data inserted
 			if($insert){
 				//set the response and exit
 				$this->response([
 					'status' => TRUE,
-					'message' => 'author has been added successfully.'
+					'message' => 'categorie has been added successfully.'
 				], REST_Controller::HTTP_OK);
 			}else{
 				//set the response and exit
@@ -57,27 +56,26 @@ class Authors extends REST_Controller {
 		}else{
 			//set the response and exit
 			//BAD_REQUEST (400) being the HTTP response code
-			$this->response("Provide complete author information to create.", REST_Controller::HTTP_BAD_REQUEST);
+			$this->response("Provide complete user information to create.", REST_Controller::HTTP_BAD_REQUEST);
 		}
 	}
 
 	public function user_put() {
-		$authorData = array();
-		$id = $this->put('id_author');
-		$authorData['name'] = $this->put('name');
-		$authorData['login'] = $this->put('login');
-		$authorData['pass_word'] = $this->put('pass_word');
+		$categorieData = array();
+		$id = $this->put('id_cat');
+		$categorieData['libelle'] = $this->put('libelle');
+		$categorieData['slug'] = $this->put('slug');
 
-		if(!empty($id) && !empty($authorData['name']) && !empty($authorData['login']) && !empty($authorData['pass_word']) ){
-			//update authors data
-			$update = $this->author->update($authorData, $id);
+		if(!empty($id) && !empty($userData['libelle']) && !empty($userData['slug']) ){
+			//update categorie data
+			$update = $this->categorie->update($categorieData, $id);
 
-			//check if the authors data updated
+			//check if the categorie data updated
 			if($update){
 				//set the response and exit
 				$this->response([
 					'status' => TRUE,
-					'message' => 'authors has been updated successfully.'
+					'message' => 'categorie has been updated successfully.'
 				], REST_Controller::HTTP_OK);
 			}else{
 				//set the response and exit
@@ -89,17 +87,17 @@ class Authors extends REST_Controller {
 		}
 	}
 
-	public function author_delete($id){
+	public function categorie_delete($id){
 		//check whether post id is not empty
 		if($id){
 			//delete post
-			$delete = $this->author->delete($id);
+			$delete = $this->categorie->delete($id);
 
 			if($delete){
 				//set the response and exit
 				$this->response([
 					'status' => TRUE,
-					'message' => 'authors has been removed successfully.'
+					'message' => 'categorie has been removed successfully.'
 				], REST_Controller::HTTP_OK);
 			}else{
 				//set the response and exit
@@ -109,7 +107,7 @@ class Authors extends REST_Controller {
 			//set the response and exit
 			$this->response([
 				'status' => FALSE,
-				'message' => 'No authors were found.'
+				'message' => 'No categorie were found.'
 			], REST_Controller::HTTP_NOT_FOUND);
 		}
 	}

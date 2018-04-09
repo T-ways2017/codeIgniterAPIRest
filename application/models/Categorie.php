@@ -26,7 +26,7 @@ class Categorie extends CI_Model
 	}
 
 	/*
-     * Insert user data
+     * Insert categories data
      */
 	public function insert($data = array())
 	{
@@ -45,7 +45,7 @@ class Categorie extends CI_Model
 	}
 
 	/*
-     * Update user data
+     * Update categories data
      */
 	public function update($data, $id) {
 		if(!empty($data) && !empty($id)){
@@ -60,10 +60,10 @@ class Categorie extends CI_Model
 	}
 
 	/*
-	* Delete user data
+	* Delete categories data
 	*/
 	public function delete($id){
-		$delete = $this->db->delete('users',array('id_cat'=>$id));
+		$delete = $this->db->delete('categories',array('id_cat'=>$id));
 		return $delete?true:false;
 	}
 
